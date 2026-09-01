@@ -8,6 +8,9 @@ cohoscales <- read.csv("CohoGrowthAverages.csv")
 
 custom.col <- c("#66bdb3", "#83919c")
 
+cohoscales2 <- na.omit(cohoscales)
+cohoscales2$MGRatio <- cohoscales2$MG2a / cohoscales2$MG1a
+
 BigQ <- subset(cohoscales, cohoscales$Hatchery == "Big Qualicum")
 Chilliwack <- subset(cohoscales, cohoscales$Hatchery == "Chilliwack")
 Quinsam <- subset(cohoscales, cohoscales$Hatchery == "Quinsam")
@@ -18,22 +21,10 @@ BigQnat <- subset(cohoscalesnat, cohoscalesnat$Hatchery == "Big Qualicum")
 Chilliwacknat <- subset(cohoscalesnat, cohoscalesnat$Hatchery == "Chilliwack")
 Quinsamnat <- subset(cohoscalesnat, cohoscalesnat$Hatchery == "Quinsam")
 
-adonis2(cohoscales2$TotalScaleLen ~ cohoscales2$FL.mm.)
-adonis2(cohoscales2$TotalScaleLen ~ cohoscales2$Hatchery * cohoscales2$Region)
-adonis2(cohoscales2$CirculiTotal ~ cohoscales2$Hatchery * cohoscales2$Region)
-adonis2(cohoscales$FWG1a ~ cohoscales$Hatchery + cohoscales$Region)
-adonis2(cohoscales$FWG1t ~ cohoscales$Hatchery * cohoscales$Region)
-adonis2(cohoscales$FWG2a ~ cohoscales$Hatchery + cohoscales$Region)
-adonis2(cohoscales$FWG2t ~ cohoscales$Hatchery * cohoscales$Region)
-adonis2(cohoscales$MG1a ~ cohoscales$Hatchery + cohoscales$Region)
-adonis2(cohoscales$MG1t ~ cohoscales$Hatchery + cohoscales$Region)
-cohoscales2 <- na.omit(cohoscales)
-adonis2(cohoscales2$MG2a ~ cohoscales2$Hatchery + cohoscales2$Region)
-adonis2(cohoscales2$MG2t ~ cohoscales2$Hatchery + cohoscales2$Region)
-adonis2(cohoscales2$MGAvg ~ cohoscales2$Hatchery + cohoscales2$Region)
-adonis2(cohoscales2$MGRatio ~ cohoscales2$Hatchery + cohoscales2$Region)
+set.seed(1)
+adonis2(cohoscales2$CirculiTotal ~ cohoscales2$Hatchery * cohoscales2$Region, by = "terms")
 
-cohoscales2$MGRatio <- cohoscales2$MG2a / cohoscales2$MG1a
+
 
 
 #Figure 5
